@@ -1079,7 +1079,7 @@ public class Langage {
                 if(split.length > 2) {
                     nom_table = getNomTable(request);
                 }
-            if(first.compareToIgnoreCase("s") == 0) {
+            if(first.compareToIgnoreCase("s") == 0 && request.contains("/") == false && request.contains("-") == false) {
                 if(checkSyntaxe(request) == true) { 
                     TableRelationnelle all = new TableRelationnelle(nom_table);
                     if(checkSimpleSelect(request) == true) {
@@ -1222,7 +1222,7 @@ public class Langage {
                 if(split.length > 2) {
                     nom_table = getNomTable(request);
                 }
-            if(first.compareToIgnoreCase("s") == 0) {
+            if(first.compareToIgnoreCase("s") == 0 && request.contains("/") == false && request.contains("-") == false) {
                 if(checkSyntaxe(request) == true) { 
                     TableRelationnelle all = new TableRelationnelle(nom_table);
                     if(checkSimpleSelect(request) == true) {

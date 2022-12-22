@@ -67,22 +67,32 @@ public class SocketClient {
             SocketClient defineClass = new SocketClient();
             InetAddress host = InetAddress.getLocalHost();
             int port = 1900;
+            System.out.println("Port default: "+ port );
+            System.out.print("Port: " );
             Socket socket = null;
             ObjectOutputStream oos = null;
             ObjectInputStream ois = null;
             int done = 0;
+            Fonction affichage = new Fonction();
+            String request = "";
+            BufferedReader buffered_reader = null;
+            buffered_reader = new BufferedReader(new InputStreamReader(System.in));
+            String new_port = buffered_reader.readLine();
+            if(new_port.compareToIgnoreCase("") != 0) {
+                port = Integer.valueOf(new_port);
+            }
+            System.out.println( "port : "+port);
             while(done != 1) {
                 socket = defineClass.connect(host.getHostName(), port);
                 oos = new ObjectOutputStream(socket.getOutputStream());
                 System.out.println(" ");
                 System.out.print("SQL>");
-                BufferedReader buffered_reader = new BufferedReader(new InputStreamReader(System.in));
-                String request = buffered_reader.readLine();
+                buffered_reader = new BufferedReader(new InputStreamReader(System.in));
+                request = buffered_reader.readLine();
                 defineClass.sendRequestToServer(request, oos);
                 ois = new ObjectInputStream(socket.getInputStream());
                 Object response = defineClass.getResponseByServer(ois);
                 if(response instanceof TableRelationnelle) {
-                    Fonction affichage = new Fonction();
                     affichage.affTable( (TableRelationnelle)response);
                 }
                 if(response instanceof Erreur) {

@@ -3,6 +3,8 @@ import socket.thread.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.lang.ClassNotFoundException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -32,9 +34,15 @@ public class SocketServeur {
         this.port = port;
     }
 
+    public int getPort() {
+        return port;
+    }
+
+
     public ServerSocket startServer(int port) throws Exception {
         try {
             this.server = new ServerSocket(port);
+            setPort(port);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -102,7 +110,17 @@ public class SocketServeur {
         try {
             SocketServeur classDefine = new SocketServeur();
             int port = 1900;
+            int done = 0;
+            System.out.println("Port default: "+ port );
+            System.out.print("Port: " );
+            BufferedReader buffered_reader = null;
+            buffered_reader = new BufferedReader(new InputStreamReader(System.in));
+            String new_port = buffered_reader.readLine();
+            if(new_port.compareToIgnoreCase("") != 0) {
+                port = Integer.valueOf(new_port);
+            }
             ServerSocket server = classDefine.startServer(port);
+            System.out.println( "port : "+classDefine.getPort());
             
             while(true){
                 System.out.println("Waiting for the client request");
